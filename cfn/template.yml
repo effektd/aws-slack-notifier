@@ -36,7 +36,6 @@ Resources:
       Handler: notifier.notify
       CodeUri: ../src
       Runtime: python3.8
-      Role: !Ref LambdaExecutionRole
 
   LambdaExecutionRole:
     Type: AWS::IAM::Role
@@ -58,7 +57,7 @@ Resources:
           Statement:
           - Effect: Allow
             Action:
-            - secretsmanager:GetSecretValue:*
+            - secretsmanager:GetSecretValue
             - sns:Subscribe
             Resource: '*'
     
@@ -67,5 +66,6 @@ Resources:
     Properties: 
       DisplayName: 'Slack Notifier'
       TopicName: 'SlackNotifier'
-      Subscription: 
-      - Ref: NotifierLambda
+      Subscription:
+        - Protocol: lambda
+          Endpoint: !GetAtt NotifierLambda.Arn
