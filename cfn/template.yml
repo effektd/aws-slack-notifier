@@ -4,38 +4,35 @@ Description: 'Slack Notifier stack'
 
 Parameters:
 
-  SlackApiToken:
-    Description: 'The Slack webhook token that will be used by the Notifier function'
-    Type: String
-    NoEcho: true
-    Default: 'empty'
-
-  SlackNotificationChannel:
+  SlackChannel:
     Description: 'The Slack channel the notifications will be sent to'
     Type: String
-    Default: 'empty'
+    Default: 'aws-notification-demo'
 
-  SlackWebHookUrl:
+  SlackWebhookUrl:
     Description: 'The Slack 2ebhook URL the function will send our notifications to'
     Type: String
-    Default: 'empty'
-
+    NoEcho: true
 
 Resources:
 
   SlackTokenSecret:
     Type: AWS::SecretsManager::Secret
     Properties: 
-      Description: 'Slack Webhook token used to authenticate to the Slack API'
-      Name: 'SlackApiToken'
-      SecretString: !Ref SlackApiToken
+      Description: 'Slack Webhook url used to post messages to Slack'
+      SecretString: !Ref SlackWebhookUrl
 
   NotifierLambda:
     Type: AWS::Serverless::Function
     Properties:
       Handler: notifier.notify
       CodeUri: ../src
-      Runtime: python3.8
+      Runtime: python3.7
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          channel: !Ref SlackChannel
+          webhook_sm_arn: !Ref SlackTokenSecret
 
   LambdaExecutionRole:
     Type: AWS::IAM::Role
