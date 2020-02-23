@@ -25,7 +25,7 @@ Resources:
   NotifierLambda:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: notifier.notify
+      Handler: notifier.handler
       CodeUri: ../src
       Runtime: python3.7
       Role: !GetAtt LambdaExecutionRole.Arn

@@ -2,7 +2,7 @@
 
 BUCKET=$1
 STACK_NAME=$2
-URL=$#
+WEBHOOK_URL=$3
 
 # Package SAM template
 aws cloudformation package --template-file cfn/template.yml --s3-bucket $BUCKET --output-template-file packaged.yml
