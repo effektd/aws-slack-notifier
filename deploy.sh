@@ -12,5 +12,4 @@ aws cloudformation package --template-file cfn/template.yml --s3-bucket $BUCKET 
 aws cloudformation deploy --template-file ./packaged.yml --stack-name $STACK_NAME --parameter-overrides SlackChannel=$CHANNEL SlackWebhookUrl=$WEBHOOK_URL --capabilities CAPABILITY_IAM
 
 # Clean packaged SAM template
-
 rm ./packaged.yml

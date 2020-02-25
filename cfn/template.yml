@@ -7,10 +7,9 @@ Parameters:
   SlackChannel:
     Description: 'The Slack channel the notifications will be sent to'
     Type: String
-    Default: 'aws-notification-demo'
 
   SlackWebhookUrl:
-    Description: 'The Slack 2ebhook URL the function will send our notifications to'
+    Description: 'The Slack Webhook URL the payload will post to'
     Type: String
     NoEcho: true
 
@@ -19,7 +18,7 @@ Resources:
   SlackTokenSecret:
     Type: AWS::SecretsManager::Secret
     Properties: 
-      Description: 'Slack Webhook url used to post messages to Slack'
+      Description: 'Slack Webhook url used to post our payloads'
       SecretString: !Ref SlackWebhookUrl
 
   NotifierLambda:
